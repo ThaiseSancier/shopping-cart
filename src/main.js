@@ -19,14 +19,26 @@ const unloadingP = () => {
   getP.remove();
 };
 
+const loadingError = () => {
+  const createPError = document.createElement('p');
+  createPError.innerHTML = 'Algum erro ocorreu, recarregue a página e tente novamente';
+  createPError.classList.add('error');
+  classProducts.appendChild(createPError);
+};
+
 const loadingProducts = async () => {
   loadingP();
-  const productsList = await fetchProductsList('computador');
-  productsList.forEach((products) => {
-    const productsSection = createProductElement(products);
-    classProducts.appendChild(productsSection);
-  });
-  unloadingP();
+  try {
+    const productsList = await fetchProductsList('computador');
+    productsList.forEach((products) => {
+      const productsSection = createProductElement(products);
+      classProducts.appendChild(productsSection);
+    });
+  } catch (error) {
+    loadingError();
+  } finally {
+    unloadingP();
+  }
 };
 
 window.onload = () => loadingProducts();
