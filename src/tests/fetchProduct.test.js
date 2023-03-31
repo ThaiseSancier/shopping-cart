@@ -28,4 +28,12 @@ describe('Teste a função fetchProduct', () => {
     const fetchError = 'ID não informado';
     await expect(fetchProduct()).rejects.toThrow(fetchError);
   });
+
+  it('testa o catch da função', async () => {
+    try {
+      await fetchProduct('XXX1405519561');
+    } catch (e) {
+      expect(e).toEqual(error.message);
+    }
+  });
 });

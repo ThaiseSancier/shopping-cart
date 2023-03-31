@@ -28,4 +28,12 @@ describe('Teste a função fetchProductsList', () => {
     const fetchError = 'Termo de busca não informado';
     await expect(fetchProductsList()).rejects.toThrow(fetchError);
   });
+
+  it('testa o catch da função', async () => {
+    try {
+      await fetchProductsList('xxxxxxxxx');
+    } catch (e) {
+      expect(e).toEqual(error.message);
+    }
+  });
 });
