@@ -5,9 +5,28 @@ import { createProductElement } from './helpers/shopFunctions';
 
 document.querySelector('.cep-button').addEventListener('click', searchCep);
 
-const productsList = await fetchProductsList('computador');
 const classProducts = document.querySelector('.products');
-productsList.forEach((products) => {
-  const productsSection = createProductElement(products);
-  classProducts.appendChild(productsSection);
-});
+
+const loadingP = () => {
+  const createP = document.createElement('p');
+  createP.innerHTML = 'carregando...';
+  createP.classList.add('loading');
+  classProducts.appendChild(createP);
+};
+
+const unloadingP = () => {
+  const getP = document.querySelector('.loading');
+  getP.remove();
+};
+
+const loadingProducts = async () => {
+  loadingP();
+  const productsList = await fetchProductsList('computador');
+  productsList.forEach((products) => {
+    const productsSection = createProductElement(products);
+    classProducts.appendChild(productsSection);
+  });
+  unloadingP();
+};
+
+window.onload = () => loadingProducts();
